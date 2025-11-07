@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Training outputs
+outputs/
+models/
+checkpoints/
+runs/
+wandb/
+
+# Data (uncomment if you want to track data)
+# data/*.jsonl
+# data/*.json
+# data/*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Tensorboard
+events.out.tfevents.*
+
+# Model files (large files)
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+
+# Temporary files
+*.tmp
+*.temp
