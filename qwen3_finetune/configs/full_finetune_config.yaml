@@ -1,0 +1,55 @@
+# Qwen3 7B Full Fine-tuning Configuration
+# Warning: Requires more GPU memory (typically 4x A100 80GB)
+
+# Model settings
+model_name_or_path: "Qwen/Qwen2.5-7B-Instruct"
+model_max_length: 2048
+use_flash_attention: true
+
+# Full fine-tuning (no LoRA)
+use_lora: false
+
+# Training arguments
+output_dir: "./outputs/full_finetune"
+num_train_epochs: 3
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 16
+gradient_checkpointing: true
+learning_rate: 5.0e-6
+weight_decay: 0.01
+warmup_ratio: 0.05
+lr_scheduler_type: "cosine"
+max_grad_norm: 1.0
+optim: "adamw_torch"
+
+# DeepSpeed ZeRO-3 for distributed training
+deepspeed: "./configs/ds_config_zero3.json"
+
+# Logging and saving
+logging_steps: 10
+save_steps: 200
+save_total_limit: 2
+evaluation_strategy: "steps"
+eval_steps: 200
+logging_dir: "./outputs/full_finetune/logs"
+report_to: "tensorboard"
+
+# Data settings
+data_path: "./data/train.jsonl"
+val_data_path: "./data/val.jsonl"
+preprocessing_num_workers: 8
+
+# Generation settings
+do_sample: true
+temperature: 0.7
+top_p: 0.9
+top_k: 50
+
+# System settings
+fp16: false
+bf16: true
+seed: 42
+dataloader_num_workers: 4
+remove_unused_columns: false
+ddp_find_unused_parameters: false

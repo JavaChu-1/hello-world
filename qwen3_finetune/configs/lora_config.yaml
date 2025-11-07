@@ -1,0 +1,70 @@
+# Qwen3 7B LoRA Fine-tuning Configuration
+
+# Model settings
+model_name_or_path: "Qwen/Qwen2.5-7B-Instruct"  # or local path
+model_max_length: 2048
+use_flash_attention: true
+
+# LoRA settings
+use_lora: true
+lora_r: 64
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+lora_bias: "none"
+
+# Quantization settings (for memory efficiency)
+load_in_4bit: true
+load_in_8bit: false
+bnb_4bit_compute_dtype: "bfloat16"
+bnb_4bit_quant_type: "nf4"
+bnb_4bit_use_double_quant: true
+
+# Training arguments
+output_dir: "./outputs"
+num_train_epochs: 3
+per_device_train_batch_size: 2
+per_device_eval_batch_size: 2
+gradient_accumulation_steps: 8
+gradient_checkpointing: true
+learning_rate: 2.0e-4
+weight_decay: 0.01
+warmup_ratio: 0.03
+lr_scheduler_type: "cosine"
+max_grad_norm: 1.0
+optim: "paged_adamw_32bit"
+
+# Logging and saving
+logging_steps: 10
+save_steps: 100
+save_total_limit: 3
+evaluation_strategy: "steps"
+eval_steps: 100
+logging_dir: "./outputs/logs"
+report_to: "tensorboard"  # or "wandb"
+
+# Data settings
+data_path: "./data/train.jsonl"
+val_data_path: "./data/val.jsonl"
+preprocessing_num_workers: 4
+
+# Generation settings (for evaluation)
+do_sample: true
+temperature: 0.7
+top_p: 0.9
+top_k: 50
+
+# System settings
+fp16: false
+bf16: true
+seed: 42
+dataloader_num_workers: 4
+remove_unused_columns: false
+ddp_find_unused_parameters: false
